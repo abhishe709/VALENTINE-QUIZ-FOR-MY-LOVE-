@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Valentine Quiz 💖</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Pacifico&display=swap" rel="stylesheet">
+
+<style>
+body{
+  margin:0;
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background:linear-gradient(135deg,#ff9a9e,#fad0c4);
+  font-family:'Poppins',sans-serif;
+}
+
+.quiz-box{
+  background:#fff;
+  width:360px;
+  padding:25px;
+  border-radius:20px;
+  text-align:center;
+  box-shadow:0 20px 40px rgba(0,0,0,.2);
+}
+
+h2{
+  font-family:'Pacifico',cursive;
+  color:#ff4d6d;
+  margin-bottom:20px;
+}
+
+.option{
+  background:#ff4d6d;
+  color:white;
+  padding:11px;
+  border-radius:14px;
+  margin:9px 0;
+  cursor:pointer;
+  transition:.3s;
+}
+
+.option:hover{
+  background:#e63950;
+}
+
+.message{
+  margin-top:12px;
+  min-height:24px;
+  font-size:15px;
+}
+
+.success{
+  color:#ff4d6d;
+  font-weight:600;
+  animation:pop .4s ease;
+}
+
+@keyframes pop{
+  0%{transform:scale(.7);opacity:0}
+  100%{transform:scale(1);opacity:1}
+}
+
+.end-note{
+  font-family:'Pacifico',cursive;
+  color:#ff4d9d;
+  font-size:20px;
+  margin-top:15px;
+  animation:pop .6s ease;
+}
+
+.sub-line{
+  margin-top:8px;
+  color:#ff4d6d;
+  font-weight:600;
+}
+</style>
+</head>
+
+<body>
+
+<div class="quiz-box">
+  <h2 id="question"></h2>
+  <div id="options"></div>
+  <div class="message" id="msg"></div>
+</div>
+
+<script>
+const quiz = [
+{
+ q:"Phli baar hum log kiss dress m mile the?",
+ options:["Green","Blue","Black","White"],
+ correct:3
+},
+{
+ q:"Tumhe mujh mein sabse pehle kya pasand aaya tha?",
+ options:["Meri smile 😊","Meri baatein 💬","Meri care 🫶","Sab kuch ❤️"],
+ correct:3
+},
+{
+ q:"Hum logo ko sath rhe kitna time ho gya h?",
+ options:["1 saal 3 mahine","2 saal 5 mahine","3 saal 8 mahine","3 saal 4 mahine"],
+ correct:3
+},
+{
+ q:"Jab hum milenge to kya krogi?",
+ options:[
+  "Baatein karogi",
+  "Puri raat baatein karogi",
+  "Pyaar karogi",
+  "Puri raat mere saath romantic time spend karogi 💞"
+ ],
+ correct:3
+},
+{
+ q:"Kya main tumhara hamesha wala Valentine hoon? 💖",
+ options:["Yes, forever 🥺💍","Shayad","No","Sochna padega 😏"],
+ correct:0
+}
+];
+
+const wrongMsgs=[
+ "plzz shi se click kro 🥺",
+ "plzz baby shi se kro na 😣",
+ "babyyyyyy 😭",
+ "m tumhara baccha hu na 🥹 shi se kro click"
+];
+
+let index=0;
+let wrongCount=0;
+
+const qEl=document.getElementById("question");
+const optEl=document.getElementById("options");
+const msgEl=document.getElementById("msg");
+
+function loadQuiz(){
+ wrongCount=0;
+ msgEl.innerHTML="";
+ optEl.innerHTML="";
+ qEl.innerText=quiz[index].q;
+
+ quiz[index].options.forEach((opt,i)=>{
+   const div=document.createElement("div");
+   div.className="option";
+   div.innerText=opt;
+   div.onclick=()=>checkAnswer(i);
+   optEl.appendChild(div);
+ });
+}
+
+function checkAnswer(i){
+ if(i===quiz[index].correct){
+   msgEl.innerHTML="💖 Aww my baby 🥺💞";
+   msgEl.className="message success";
+
+   setTimeout(()=>{
+     index++;
+     if(index<quiz.length){
+       loadQuiz();
+     }else{
+       showEnd();
+     }
+   },900);
+
+ }else{
+   if(wrongCount<4){
+     msgEl.innerText=wrongMsgs[wrongCount];
+     wrongCount++;
+   }
+ }
+}
+
+function showEnd(){
+ qEl.innerText="💘 Quiz Completed 💘";
+ optEl.innerHTML="";
+ msgEl.innerHTML=`
+   <div class="end-note">
+     I Love you my baby, you are my first love
+   </div>
+   <div class="sub-line">
+     You are Abhishek's Valentine 💕
+   </div>
+ `;
+}
+
+loadQuiz();
+</script>
+
+</body>
+</html>
